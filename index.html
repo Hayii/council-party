@@ -13,8 +13,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      overflow: hidden;
+      min-height: 100vh;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     .container {
@@ -105,6 +106,22 @@
         display: none;
       }
     }
+
+    /* Mobile spacing & scrolling fix */
+    @media (max-width: 899px) {
+      .container {
+        padding: 30px 22px 50px;
+      }
+
+      h1 {
+        font-size: 2.6rem;
+      }
+
+      .rule-text {
+        font-size: 1.8rem;
+      }
+    }
+    }
   </style>
 </head>
 <body>
@@ -126,7 +143,7 @@
         id="ruleInput"
         type="text"
         maxlength="140"
-        placeholder="Type one appropriate rule (1 sentence)"
+        placeholder="Type one law (1 sentence)"
       />
       <button onclick="submitRule()">Submit to the Court</button>
     </div>
