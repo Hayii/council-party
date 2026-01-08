@@ -19,7 +19,7 @@
     }
 
     .container {
-      width: 92%;
+      width: calc(100% - 24px);
       max-width: 1100px;
       text-align: center;
       border: 4px solid #c9a44c;
@@ -28,6 +28,7 @@
       box-shadow: 0 0 40px rgba(201, 164, 76, 0.45);
       background: rgba(15, 10, 6, 0.6);
       backdrop-filter: blur(2px);
+      box-sizing: border-box;
     }
 
     h1 {
@@ -76,11 +77,12 @@
 
     input {
       width: 100%;
-      padding: 18px;
+      padding: 16px 18px;
       font-size: 1.1rem;
       border-radius: 10px;
       border: none;
       outline: none;
+      box-sizing: border-box;
     }
 
     button {
@@ -109,9 +111,30 @@
 
     /* Mobile spacing & scrolling fix */
     @media (max-width: 899px) {
-      .container {
-        padding: 30px 22px 50px;
+      body {
+        padding: 12px;
       }
+
+      .container {
+        padding: 28px 20px 44px;
+      }
+
+      h1 {
+        font-size: 2.4rem;
+      }
+
+      .rule-text {
+        font-size: 1.7rem;
+      }
+
+      .rule-box {
+        padding: 26px 20px;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
 
       h1 {
         font-size: 2.6rem;
@@ -129,7 +152,7 @@
     <h1>⚖️ Order in the Court! ⚖️</h1>
 
     <div class="rule-box">
-      <div class="label">Council Law</div>
+      <div class="label">Council Decree</div>
       <div id="councilRule" class="rule-text">Awaiting judgment…</div>
     </div>
 
@@ -143,7 +166,7 @@
         id="ruleInput"
         type="text"
         maxlength="140"
-        placeholder="Type one law (1 sentence)"
+        placeholder="Type one appropriate rule (1 sentence)"
       />
       <button onclick="submitRule()">Submit to the Court</button>
     </div>
