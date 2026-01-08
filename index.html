@@ -2,96 +2,134 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Court Rules</title>
+  <title>Order in the Court</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       margin: 0;
       font-family: 'Georgia', serif;
-      background: #111;
+      background: radial-gradient(circle at top, #2b1b0f, #0f0a06);
       color: #f5f5f5;
       display: flex;
       align-items: center;
       justify-content: center;
       height: 100vh;
+      overflow: hidden;
     }
+
     .container {
-      width: 90%;
-      max-width: 900px;
+      width: 92%;
+      max-width: 1100px;
       text-align: center;
-      border: 3px solid #c9a44c;
-      padding: 40px;
-      border-radius: 16px;
-      box-shadow: 0 0 25px rgba(201, 164, 76, 0.4);
+      border: 4px solid #c9a44c;
+      padding: 50px 60px;
+      border-radius: 22px;
+      box-shadow: 0 0 40px rgba(201, 164, 76, 0.45);
+      background: rgba(15, 10, 6, 0.6);
+      backdrop-filter: blur(2px);
     }
+
     h1 {
-      font-size: 3rem;
-      margin-bottom: 30px;
-      letter-spacing: 2px;
-    }
-    .rule-box {
-      margin: 25px 0;
-      padding: 20px;
-      border: 2px solid #c9a44c;
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.05);
-    }
-    .label {
-      font-size: 1.2rem;
-      margin-bottom: 10px;
-      color: #c9a44c;
+      font-size: 3.8rem;
+      margin-bottom: 40px;
+      letter-spacing: 3px;
+      color: #e6c36a;
       text-transform: uppercase;
-      letter-spacing: 1px;
     }
+
+    .rule-box {
+      margin: 35px 0;
+      padding: 35px 30px;
+      border: 3px solid #c9a44c;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.06);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .label {
+      font-size: 1.3rem;
+      margin-bottom: 16px;
+      color: #c9a44c;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
     .rule-text {
-      font-size: 1.6rem;
-      min-height: 60px;
+      font-size: 2.4rem;
+      min-height: 90px;
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.6s ease, transform 0.6s ease;
     }
+
+    .rule-text.animate {
+      opacity: 0;
+      transform: translateY(25px);
+    }
+
+    /* Phone-only input */
+    .input-area {
+      margin-top: 40px;
+    }
+
     input {
       width: 100%;
-      padding: 14px;
+      padding: 18px;
       font-size: 1.1rem;
-      border-radius: 8px;
+      border-radius: 10px;
       border: none;
-      margin-top: 20px;
+      outline: none;
     }
+
     button {
-      margin-top: 20px;
-      padding: 14px 28px;
+      margin-top: 22px;
+      padding: 16px 34px;
       font-size: 1.1rem;
-      border-radius: 8px;
+      border-radius: 10px;
       border: none;
       cursor: pointer;
-      background: #c9a44c;
+      background: linear-gradient(135deg, #c9a44c, #e6c36a);
       color: #111;
       font-weight: bold;
+      letter-spacing: 1px;
     }
+
     button:hover {
-      background: #e2bd62;
+      filter: brightness(1.1);
+    }
+
+    /* Hide input on large displays (TV mode) */
+    @media (min-width: 900px) {
+      .input-area {
+        display: none;
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>⚖️ Court Is In Session ⚖️</h1>
+    <h1>⚖️ Order in the Court! ⚖️</h1>
 
     <div class="rule-box">
-      <div class="label">Council Rule</div>
+      <div class="label">Council Law</div>
       <div id="councilRule" class="rule-text">Awaiting judgment…</div>
     </div>
 
     <div class="rule-box">
-      <div class="label">Standing Court Rule</div>
+      <div class="label">Standing Court Law</div>
       <div id="presetRule" class="rule-text">—</div>
     </div>
 
-    <input
-      id="ruleInput"
-      type="text"
-      maxlength="140"
-      placeholder="Type your rule here (1 sentence, be appropriate)"
-    />
-    <button onclick="submitRule()">Submit Rule</button>
+    <div class="input-area">
+      <input
+        id="ruleInput"
+        type="text"
+        maxlength="140"
+        placeholder="Type one appropriate rule (1 sentence)"
+      />
+      <button onclick="submitRule()">Submit to the Court</button>
+    </div>
   </div>
 
   <script>
@@ -104,6 +142,14 @@
       "No leaving the room without court approval."
     ];
 
+    function animateText(element, newText) {
+      element.classList.add('animate');
+      setTimeout(() => {
+        element.textContent = newText;
+        element.classList.remove('animate');
+      }, 600);
+    }
+
     function submitRule() {
       const input = document.getElementById('ruleInput');
       const text = input.value.trim();
@@ -115,8 +161,8 @@
 
       const randomRule = presetRules[Math.floor(Math.random() * presetRules.length)];
 
-      document.getElementById('councilRule').textContent = text;
-      document.getElementById('presetRule').textContent = randomRule;
+      animateText(document.getElementById('councilRule'), text);
+      animateText(document.getElementById('presetRule'), randomRule);
 
       input.value = '';
     }
