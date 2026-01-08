@@ -4,38 +4,10 @@
   <meta charset="UTF-8" />
   <title>Order in the Court</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <!-- Firebase App (always required) -->
+
+  <!-- Firebase App -->
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-  <!-- Firebase Realtime Database -->
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-
-  <script>
-const firebaseConfig = {
-  apiKey: "AIzaSyBny0LlWfZaMDGFYoQIJf0KORzZikka-S8",
-  authDomain: "council-party.firebaseapp.com",
-  databaseURL: "https://council-party-default-rtdb.firebaseio.com",
-  projectId: "council-party",
-  storageBucket: "council-party.firebasestorage.app",
-  messagingSenderId: "765133908486",
-  appId: "1:765133908486:web:da5de236e5dfcc4265f187"
-};
-
-// Initialize Firebase
-  const app = firebase.initializeApp(firebaseConfig);
-  const database = firebase.database();
-
-  const councilElement = document.getElementById('councilRule');
-  const presetElement = document.getElementById('presetRule');
-
-  database.ref('current').on('value', (snapshot) => {
-    const data = snapshot.val();
-    if (!data) return;
-      animateText(councilElement, data.councilRule);
-      animateText(presetElement, data.presetRule);
-});
-
-  </script>
 
   <style>
     body {
@@ -103,7 +75,6 @@ const firebaseConfig = {
       transform: translateY(25px);
     }
 
-    /* Phone-only input */
     .input-area {
       margin-top: 40px;
     }
@@ -135,47 +106,18 @@ const firebaseConfig = {
       filter: brightness(1.1);
     }
 
-    /* Hide input on large displays (TV mode) */
     @media (min-width: 900px) {
-      .input-area {
-        display: none;
-      }
+      .input-area { display: none; }
     }
 
-    /* Mobile spacing & scrolling fix */
     @media (max-width: 899px) {
-      body {
-        padding: 12px;
-      }
-
-      .container {
-        padding: 28px 20px 44px;
-      }
-
-      h1 {
-        font-size: 2.4rem;
-      }
-
-      .rule-text {
-        font-size: 1.7rem;
-      }
-
-      .rule-box {
-        padding: 26px 20px;
-      }
-
-      button {
-        width: 100%;
-      }
+      body { padding: 12px; }
+      .container { padding: 28px 20px 44px; }
+      h1 { font-size: 2.4rem; }
+      .rule-text { font-size: 1.7rem; }
+      .rule-box { padding: 26px 20px; }
+      button { width: 100%; }
     }
-
-      h1 {
-        font-size: 2.6rem;
-      }
-
-      .rule-text {
-        font-size: 1.8rem;
-      }
   </style>
 </head>
 <body>
@@ -193,17 +135,13 @@ const firebaseConfig = {
     </div>
 
     <div class="input-area">
-      <input
-        id="ruleInput"
-        type="text"
-        maxlength="140"
-        placeholder="Type one appropriate rule (1 sentence)"
-      />
+      <input id="ruleInput" type="text" maxlength="140" placeholder="Type one appropriate rule (1 sentence)" />
       <button onclick="submitRule()">Submit to the Court</button>
     </div>
   </div>
 
   <script>
+    // ===== Preset rules =====
     const presetRules = [
       "No one may refuse a toast when offered.",
       "Any spilled drink must be replaced immediately.",
@@ -213,6 +151,7 @@ const firebaseConfig = {
       "No leaving the room without court approval."
     ];
 
+    // ===== Animate text function =====
     function animateText(element, newText) {
       element.classList.add('animate');
       setTimeout(() => {
@@ -221,6 +160,32 @@ const firebaseConfig = {
       }, 600);
     }
 
+    // ===== Firebase config =====
+    const firebaseConfig = {
+      apiKey: "AIzaSyBny0LlWfZaMDGFYoQIJf0KORzZikka-S8",
+      authDomain: "council-party.firebaseapp.com",
+      databaseURL: "https://council-party-default-rtdb.firebaseio.com",
+      projectId: "council-party",
+      storageBucket: "council-party.firebasestorage.app",
+      messagingSenderId: "765133908486",
+      appId: "1:765133908486:web:da5de236e5dfcc4265f187"
+    };
+    const app = firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    // ===== Elements =====
+    const councilElement = document.getElementById('councilRule');
+    const presetElement = document.getElementById('presetRule');
+
+    // ===== Listener for live updates =====
+    database.ref('current').on('value', (snapshot) => {
+      const data = snapshot.val();
+      if (!data) return;
+      animateText(councilElement, data.councilRule);
+      animateText(presetElement, data.presetRule);
+    });
+
+    // ===== Submit rule function =====
     function submitRule() {
       const input = document.getElementById('ruleInput');
       const text = input.value.trim();
@@ -243,16 +208,6 @@ const firebaseConfig = {
 
       input.value = '';
     }
-      const councilElement = document.getElementById('councilRule');
-      const presetElement = document.getElementById('presetRule');
-
-      database.ref('current').on('value', (snapshot) => {
-      const data = snapshot.val();
-      if (!data) return;
-        animateText(councilElement, data.councilRule);
-        animateText(presetElement, data.presetRule);
-    });
-
   </script>
 </body>
 </html>
